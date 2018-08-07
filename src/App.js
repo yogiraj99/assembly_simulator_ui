@@ -4,54 +4,22 @@ import ErrorMessage from "./ErrorMessage";
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import Machine from 'assembly_simulator';
+import {HIGHLIGHTINGCOLOUR, INITAILCODE, INITIALMESSAGE} from "./constants";
+import helpers from "./helpers";
 
-let initialMessage = "No errors found";
 let machine = new Machine();
-let initialRegisterTable = [];
-const columns = [{
-  Header: 'A',
-  accessor: 'A'
-}, {
-  Header: 'B',
-  accessor: 'B'
-}, {
-  Header: 'C',
-  accessor: 'C'
-}, {
-  Header: 'D',
-  accessor: 'D'
-}, {
-  Header: 'EQ',
-  accessor: 'EQ'
-}, {
-  Header: 'GT',
-  accessor: 'GT'
-}, {
-  Header: 'LT',
-  accessor: 'LT'
-}, {
-  Header: 'NE',
-  accessor: 'NE'
-}, {
-  Header: 'NL',
-  accessor: 'NL'
-}, {
-  Header: 'PRN',
-  accessor: 'PRN'
-}
-];
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: "10 START\n20 PRN \"HELLO\"\n30 STOP",
-      registerTable: initialRegisterTable,
-      errorMessage: initialMessage
+      code: INITAILCODE,
+      registerTable: [],
+      errorMessage: INITIALMESSAGE
     };
     this.handleCodeChange = this.handleCodeChange.bind(this);
     this.executeCode = this.executeCode.bind(this);
-    this.getIndexOfChangedRows = this.getIndexOfChangedRows.bind(this);
+    this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
   }
 
   render() {
@@ -63,7 +31,7 @@ class App extends Component {
             <ErrorMessage message={this.state.errorMessage}/>
             <button onClick={this.executeCode}>Execute</button>
           </div>
-          <ReactTable columns={columns} data={this.state.registerTable}
+          <ReactTable columns={helpers.getColumns} data={this.state.registerTable}
                       showPaginationBottom={false}
                       className="-striped"
                       noDataText=""
@@ -72,21 +40,17 @@ class App extends Component {
                         if (!rowInfo) return {};
                         return {
                           style: {
-                            background: rowInfo.original.hasChanged ? "lightblue" : null
+                            background: rowInfo.original.hasChanged ? HIGHLIGHTINGCOLOUR : null
                           }
 
                         };
                       }}
-                      getTdProps={(state, rowInfo, column) => {
+              //Change this prop name to "getTdProps" if you want on click of any cell in given column
+                      getTheadThProps={(state, rowInfo, column) => {
                         return {
-                          onClick(e) {
-                            console.log(state.data);
-                            console.log(column);
-                            let indexOfChangedRows = app.getIndexOfChangedRows(state.data, column.id);
-                            console.log(indexOfChangedRows);
-                            console.log(state.data);
+                          onClick() {
+                            app.setHasChangedPropertyForChangedRows(column.id);
                           }
-
                         };
                       }}
                       pageSize={this.state.registerTable.length}
@@ -97,24 +61,23 @@ class App extends Component {
     );
   }
 
-  getIndexOfChangedRows(data, columnId) {
-    let previousState = (data[0]) ? data[0][columnId] : undefined;
-    let indicesOfChangedRow = [];
-    for (let i = 1; i < data.length; i++) {
-      let rowData = data[i];
-      if (rowData[columnId] !== previousState) {
-        let registerTable = this.state.registerTable;
-        registerTable[i].hasChanged = true;
-        this.setState({registerTable});
-        indicesOfChangedRow.push(i);
-      } else {
-        let registerTable = this.state.registerTable;
-        registerTable[i].hasChanged = false;
-        this.setState({registerTable});
-      }
-      previousState = rowData[columnId];
-    }
-    return indicesOfChangedRow;
+  setHasChangedPropertyForChangedRows(columnId) {
+    let registerTable = this.state.registerTable;
+    let previousState = (registerTable[0]) ? registerTable[0][columnId] : undefined;
+    registerTable.forEach((row, rowIndex) => {
+      let onChange = this.setHasChangedAs.bind(this, rowIndex, true);
+      let onNotChange = this.setHasChangedAs.bind(this, rowIndex, false);
+      let currentState = row[columnId];
+      //Think about name for this function : Here you are not only comparing but also executing onChange or onNotChange function
+      helpers.compareState(currentState, previousState, onChange, onNotChange);
+      previousState = row[columnId];
+    });
+  }
+
+  setHasChangedAs(rowIndex, state) {
+    let registerTable = this.state.registerTable;
+    registerTable[rowIndex].hasChanged = state;
+    this.setState({registerTable});
   }
 
   handleCodeChange(event) {
@@ -125,11 +88,9 @@ class App extends Component {
     try {
       machine.load(this.state.code);
       machine.execute();
-      console.log(machine.getPrn().join("\n"));
-      console.log(machine.getTable());
-      this.setState({registerTable: machine.getTable(), errorMessage: initialMessage});
+      this.setState({registerTable: machine.getTable(), errorMessage: INITIALMESSAGE});
     } catch (e) {
-      this.setState({errorMessage: e, registerTable: initialRegisterTable})
+      this.setState({errorMessage: e, registerTable: []})
     }
   }
 }
