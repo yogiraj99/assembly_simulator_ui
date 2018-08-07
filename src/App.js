@@ -31,7 +31,7 @@ class App extends Component {
             <ErrorMessage message={this.state.errorMessage}/>
             <button onClick={this.executeCode}>Execute</button>
           </div>
-          <ReactTable columns={helpers.getColumns} data={this.state.registerTable}
+          <ReactTable columns={helpers.getColumns()} data={this.state.registerTable}
                       showPaginationBottom={false}
                       className="-striped"
                       noDataText=""
