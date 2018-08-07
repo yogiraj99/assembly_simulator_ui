@@ -1,0 +1,33 @@
+body {
+    margin: 4%;
+    padding: 1%;
+    font-family: sans-serif;
+    font-size: 120%;
+}
+
+.errorMessage{
+    color: red;
+}
+
+.rt-noData{
+    display: none !important;
+}
+
+.app{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.codeSection{
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.editor{
+    font-size: 100%;
+    flex-grow: 1;
+    width: 210px;
+    height: 420px;
+}
