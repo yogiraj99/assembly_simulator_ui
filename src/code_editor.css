@@ -1,0 +1,9 @@
+.machine {
+  width: 960px;
+  display: flex;
+  margin: 0 auto;
+}
+
+.editor {
+  width: 50%;
+}

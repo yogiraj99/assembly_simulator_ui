@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "assembly_simulator": "git+https://github.com/step/assembly_simulator.git",
+    "@craftybones/assembly_simulator": "git+https://github.com/step/assembly_simulator.git",
+    "codemirror": "^5.39.2",
     "react": "^16.4.2",
+    "react-codemirror2": "^5.1.0",
     "react-dom": "^16.4.2",
-    "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
-    "react-table": "^6.8.6",
-    "redux": "^4.0.0"
+    "react-table": "^6.8.6"
   },
   "scripts": {
     "start": "react-scripts start",

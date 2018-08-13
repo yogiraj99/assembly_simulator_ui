@@ -1,25 +1,31 @@
 import React, {Component} from 'react';
-import EditorComp from "./EditorComp";
-import ErrorMessage from "./ErrorMessage";
+import Message from "./Message";
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
-import Machine from 'assembly_simulator';
-import {HIGHLIGHTINGCOLOUR, INITAILCODE, INITIALMESSAGE} from "./constants";
+import Machine from '@craftybones/assembly_simulator';
+import {HIGHLIGHTINGCOLOUR, INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
+import './code_editor.css';
+import EditorComp from "./EditorComp";
 
-let machine = new Machine();
+require('codemirror/lib/codemirror.css');
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: INITAILCODE,
+      machine: new Machine(),
+      editor: INITIALCODE,
       registerTable: [],
-      errorMessage: INITIALMESSAGE
+      message: INITIALMESSAGE
     };
-    this.handleCodeChange = this.handleCodeChange.bind(this);
     this.executeCode = this.executeCode.bind(this);
+    this.handleCodeEdit = this.handleCodeEdit.bind(this);
     this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
+  }
+
+  handleCodeEdit(editor) {
+    this.setState({editor})
   }
 
   render() {
@@ -27,8 +33,8 @@ class App extends Component {
     return (
         <div className="app">
           <div className="codeSection">
-            <EditorComp code={this.state.code} onCodeChange={this.handleCodeChange}/>
-            <ErrorMessage message={this.state.errorMessage}/>
+            <EditorComp initailCode={INITIALCODE} onEdit={this.handleCodeEdit}/>
+            <Message message={this.state.message}/>
             <button onClick={this.executeCode}>Execute</button>
           </div>
           <ReactTable columns={helpers.getColumns()} data={this.state.registerTable}
@@ -80,17 +86,16 @@ class App extends Component {
     this.setState({registerTable});
   }
 
-  handleCodeChange(event) {
-    this.setState({code: event.target.value});
-  }
-
   executeCode() {
+    let lines = this.state.editor.split(/\n/);
+    let numberedCode = lines.map((l, i) => `${(i + 1) * 10} ${l.trim()}`).join("\n");
+    let machine = this.state.machine;
     try {
-      machine.load(this.state.code);
+      machine.load(numberedCode);
       machine.execute();
-      this.setState({registerTable: machine.getTable(), errorMessage: INITIALMESSAGE});
+      this.setState({registerTable: machine.getTable(), message: INITIALMESSAGE});
     } catch (e) {
-      this.setState({errorMessage: e, registerTable: []})
+      this.setState({message: e, registerTable: []})
     }
   }
 }

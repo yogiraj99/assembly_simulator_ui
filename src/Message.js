@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class ErrorMessage extends React.Component {
+export default class Message extends React.Component {
   render() {
     console.log(this.props.message);
     return (<div className="errorMessage">
