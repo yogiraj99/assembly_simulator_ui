@@ -1,6 +1,5 @@
 import React from 'react';
 import {UnControlled as CodeMirror} from 'react-codemirror2'
-import './code_editor.css';
 
 require('codemirror/lib/codemirror.css');
 
@@ -15,7 +14,7 @@ export default class EditorComp extends React.Component {
                   options={{lineNumbers: true, lineNumberFormatter: (a) => a * 10}}
                   onChange={(editor, value) => {
                     this.props.onEdit(editor.doc.getValue())
-                  }}>
+                  }} className="editor">
       </CodeMirror>
     </div>)
   }

@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import Message from "./Message";
+import MessageBox from "./MessageBox";
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import Machine from '@craftybones/assembly_simulator';
 import {HIGHLIGHTINGCOLOUR, INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
-import './code_editor.css';
 import EditorComp from "./EditorComp";
 
 require('codemirror/lib/codemirror.css');
@@ -34,7 +33,7 @@ class App extends Component {
         <div className="app">
           <div className="codeSection">
             <EditorComp initailCode={INITIALCODE} onEdit={this.handleCodeEdit}/>
-            <Message message={this.state.message}/>
+            <MessageBox message={this.state.message}/>
             <button onClick={this.executeCode}>Execute</button>
           </div>
           <ReactTable columns={helpers.getColumns()} data={this.state.registerTable}

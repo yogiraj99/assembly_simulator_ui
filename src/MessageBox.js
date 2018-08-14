@@ -1,9 +1,9 @@
 import React from "react";
 
-export default class Message extends React.Component {
+export default class MessageBox extends React.Component {
   render() {
     console.log(this.props.message);
-    return (<div className="errorMessage">
+    return (<div className="messageBox">
       {this.props.message.toString()}
     </div>)
   }

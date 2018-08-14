@@ -5,29 +5,37 @@ body {
     font-size: 120%;
 }
 
-.errorMessage{
+.messageBox {
+    padding: 10% 3%;
     color: red;
 }
 
-.rt-noData{
+.rt-noData {
     display: none !important;
 }
 
-.app{
+.app {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.codeSection{
+.codeSection {
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
 }
 
-.editor{
+.CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+}
+
+.CodeMirror-scroll {
+    overflow-y: hidden !important;
+    overflow-x: auto !important;
+}
+
+.editor {
     font-size: 100%;
     flex-grow: 1;
-    width: 210px;
-    height: 420px;
 }
