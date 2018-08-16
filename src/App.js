@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import MessageBox from "./MessageBox";
-import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import Machine from '@craftybones/assembly_simulator';
-import {HIGHLIGHTINGCOLOUR, INITIALCODE, INITIALMESSAGE} from "./constants";
+import {INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
 import EditorComp from "./EditorComp";
+import PrintTable from "./PrintTable";
+import CustomTable from "./CustomTable";
 
 require('codemirror/lib/codemirror.css');
 
@@ -16,7 +17,8 @@ class App extends Component {
       machine: new Machine(),
       editor: INITIALCODE,
       registerTable: [],
-      message: INITIALMESSAGE
+      message: INITIALMESSAGE,
+      prints: []
     };
     this.executeCode = this.executeCode.bind(this);
     this.handleCodeEdit = this.handleCodeEdit.bind(this);
@@ -36,37 +38,17 @@ class App extends Component {
             <MessageBox message={this.state.message}/>
             <button onClick={this.executeCode}>Execute</button>
           </div>
-          <ReactTable columns={helpers.getColumns()} data={this.state.registerTable}
-                      showPaginationBottom={false}
-                      className="-striped"
-                      noDataText=""
-                      minRows={10}
-                      getTrProps={(state, rowInfo, column) => {
-                        if (!rowInfo) return {};
-                        return {
-                          style: {
-                            background: rowInfo.original.hasChanged ? HIGHLIGHTINGCOLOUR : null
-                          }
-
-                        };
-                      }}
-              //Change this prop name to "getTdProps" if you want on click of any cell in given column
-                      getTheadThProps={(state, rowInfo, column) => {
-                        return {
-                          onClick() {
-                            app.setHasChangedPropertyForChangedRows(column.id);
-                          }
-                        };
-                      }}
-                      pageSize={this.state.registerTable.length}
-                      sortable={false}
-                      resizable={false}
-          />
+          <div className="outputSection">
+            <PrintTable prints={this.state.prints}/>
+            <CustomTable rows={this.state.registerTable} headers={helpers.getColumns()} className="registerTable"
+                         onClickOfHeader={this.setHasChangedPropertyForChangedRows}/>
+          </div>
         </div>
     );
   }
 
-  setHasChangedPropertyForChangedRows(columnId) {
+  setHasChangedPropertyForChangedRows(event) {
+    let columnId = event.target.id;
     let registerTable = this.state.registerTable;
     let previousState = (registerTable[0]) ? registerTable[0][columnId] : undefined;
     registerTable.forEach((row, rowIndex) => {
@@ -93,6 +75,7 @@ class App extends Component {
       machine.load(numberedCode);
       machine.execute();
       this.setState({registerTable: machine.getTable(), message: INITIALMESSAGE});
+      this.setState({prints: machine.getPrn()});
     } catch (e) {
       this.setState({message: e, registerTable: []})
     }

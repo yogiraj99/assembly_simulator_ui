@@ -4,9 +4,6 @@ import {UnControlled as CodeMirror} from 'react-codemirror2'
 require('codemirror/lib/codemirror.css');
 
 export default class EditorComp extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (<div>

@@ -1,9 +1,11 @@
 const getColumns = function () {
-  return [{Header: 'A', accessor: 'A'}, {Header: 'B', accessor: 'B'},
-    {Header: 'C', accessor: 'C'}, {Header: 'D', accessor: 'D'},
-    {Header: 'EQ', accessor: 'EQ'}, {Header: 'GT', accessor: 'GT'},
-    {Header: 'LT', accessor: 'LT'}, {Header: 'NE', accessor: 'NE'},
-    {Header: 'NL', accessor: 'NL'}, {Header: 'PRN', accessor: 'PRN'}
+  return [{header: 'CL', accessor: 'CL'}, {header: 'NL', accessor: 'NL'},
+    {header: 'INST', accessor: 'INST'},
+    {header: 'A', accessor: 'A'}, {header: 'B', accessor: 'B'},
+    {header: 'C', accessor: 'C'}, {header: 'D', accessor: 'D'},
+    {header: 'EQ', accessor: 'EQ'}, {header: 'NE', accessor: 'NE'},
+    {header: 'GT', accessor: 'GT'}, {header: 'LT', accessor: 'LT'},
+    {header: 'PRN', accessor: 'PRN'}
   ]
 };
 
