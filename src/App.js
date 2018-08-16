@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import MessageBox from "./MessageBox";
-import "react-table/react-table.css";
 import Machine from '@craftybones/assembly_simulator';
 import {INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
