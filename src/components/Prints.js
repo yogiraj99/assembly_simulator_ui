@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class PrintTable extends React.Component {
+export default class Prints extends React.Component {
 
   render() {
     return (<div className="prints">{this.getAllPrints()}</div>)

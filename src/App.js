@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import MessageBox from "./MessageBox";
+import MessageBox from "./components/MessageBox";
 import Machine from '@craftybones/assembly_simulator';
 import {INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
-import EditorComp from "./EditorComp";
-import PrintTable from "./PrintTable";
-import CustomTable from "./CustomTable";
-
-require('codemirror/lib/codemirror.css');
+import EditorComp from "./components/EditorComp";
+import Prints from "./components/Prints";
+import CustomTable from "./components/CustomTable";
 
 class App extends Component {
   constructor(props) {
@@ -29,7 +27,6 @@ class App extends Component {
   }
 
   render() {
-    let app = this;
     return (
         <div className="app">
           <div className="codeSection">
@@ -38,7 +35,7 @@ class App extends Component {
             <button onClick={this.executeCode}>Execute</button>
           </div>
           <div className="outputSection">
-            <PrintTable prints={this.state.prints}/>
+            <Prints prints={this.state.prints}/>
             <CustomTable rows={this.state.registerTable} headers={helpers.getColumns()} className="registerTable"
                          onClickOfHeader={this.setHasChangedPropertyForChangedRows}/>
           </div>

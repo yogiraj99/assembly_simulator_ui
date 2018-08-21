@@ -1,5 +1,5 @@
 import React from "react"
-import {classNameOfRowsChanged} from "./constants";
+import {classNameOfRowsChanged} from "../constants";
 
 function getClassName(row) {
   return (row.hasChanged) ? classNameOfRowsChanged : null;

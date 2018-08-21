@@ -2,6 +2,21 @@ body {
     margin: 2% 0;
 }
 
+table {
+    border-collapse: collapse;
+}
+
+table th {
+    border: black solid 1px;
+    height: 30px;
+}
+
+table td {
+    border: black solid 1px;
+    height: 30px;
+    text-align: center;
+}
+
 .app {
     display: flex;
     flex-direction: row;
@@ -17,13 +32,14 @@ body {
 .outputSection {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 70%;
 }
 
 .prints {
     height: 150px;
     border: black 2px solid;
     overflow: scroll;
+    padding-left: 10px;
 }
 
 .CodeMirror {
@@ -49,17 +65,6 @@ body {
     display: table;
     border: black solid 1px;
     margin: 2% 0;
-    border-collapse: collapse;
-}
-
-.registerTable td {
-    border: black solid 1px;
-    height: 30px;
-    text-align: center;
-}
-
-.registerTable th {
-    border: black solid 1px;
 }
 
 .rowChanged {
