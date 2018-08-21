@@ -6,7 +6,7 @@ function getClassName(row) {
 }
 
 const createRow = (row, headers) => {
-  let cols = headers.map((header) => <td>{row[header.accessor]}</td>);
+  let cols = headers.map((header) => <td className={header.header + "Class"}>{row[header.accessor]}</td>);
   return (<tr className={getClassName(row)}>{cols}</tr>);
 };
 

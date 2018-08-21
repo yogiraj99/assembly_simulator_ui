@@ -22,6 +22,16 @@ table td {
     flex-direction: row;
 }
 
+.INSTClass {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.PRNClass {
+    text-align: left;
+    padding-left: 10px;
+}
+
 .codeSection {
     padding: 0 1%;
     display: flex;
