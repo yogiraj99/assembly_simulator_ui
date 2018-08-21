@@ -80,3 +80,10 @@ table td {
 .rowChanged {
     background: lightblue;
 }
+
+.stack {
+    display: table;
+    border: black solid 1px;
+    margin: 0 20px;
+    width: 150px;
+}

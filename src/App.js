@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import MessageBox from "./components/MessageBox";
-import Machine from '@craftybones/assembly_simulator';
+import Machine from '../node_modules/assembly_simulator';
 import {INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
 import EditorComp from "./components/EditorComp";
 import Prints from "./components/Prints";
 import CustomTable from "./components/CustomTable";
+import Stack from "./components/Stack";
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class App extends Component {
       editor: INITIALCODE,
       registerTable: [],
       message: INITIALMESSAGE,
-      prints: []
+      prints: [],
+      stack: []
     };
     this.executeCode = this.executeCode.bind(this);
     this.handleCodeEdit = this.handleCodeEdit.bind(this);
@@ -38,6 +40,9 @@ class App extends Component {
             <Prints prints={this.state.prints}/>
             <CustomTable rows={this.state.registerTable} headers={helpers.getColumns()} className="registerTable"
                          onClickOfHeader={this.setHasChangedPropertyForChangedRows}/>
+          </div>
+          <div>
+            <Stack stack={this.state.stack}/>
           </div>
         </div>
     );
@@ -71,7 +76,7 @@ class App extends Component {
       machine.load(numberedCode);
       machine.execute();
       this.setState({registerTable: machine.getTable(), message: INITIALMESSAGE});
-      this.setState({prints: machine.getPrn()});
+      this.setState({prints: machine.getPrn(), stack: machine.getStack()});
     } catch (e) {
       this.setState({message: e, registerTable: []})
     }
