@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import MessageBox from "./components/MessageBox";
-import Machine from '../node_modules/assembly_simulator';
+import Machine from '@craftybones/assembly_simulator';
 import {INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
 import EditorComp from "./components/EditorComp";
@@ -34,7 +34,9 @@ class App extends Component {
           <div className="codeSection">
             <EditorComp initailCode={INITIALCODE} onEdit={this.handleCodeEdit}/>
             <MessageBox message={this.state.message}/>
-            <button onClick={this.executeCode}>Execute</button>
+            <div>
+              <button onClick={this.executeCode}>Execute</button>
+            </div>
           </div>
           <div className="outputSection">
             <Prints prints={this.state.prints}/>
