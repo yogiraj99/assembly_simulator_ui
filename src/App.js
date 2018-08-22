@@ -138,8 +138,13 @@ class App extends Component {
     this.setState({registerTable, prints, stack: STK});
   }
 
-  showStackForLine(row) {
-    this.setState({stack: row.STK});
+  showStackForLine(clickedRow) {
+    this.setState({stack: clickedRow.STK});
+    let registerTable = this.state.registerTable;
+    for (let i = 0; i < registerTable.length; i++) {
+      registerTable[i].hasChanged = (registerTable[i] === clickedRow);
+    }
+    this.setState({registerTable});
   }
 }
 

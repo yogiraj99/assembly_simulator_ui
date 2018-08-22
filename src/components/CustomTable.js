@@ -7,7 +7,7 @@ function getClassName(row) {
 
 const createRow = (row, headers, onClickOfRow) => {
   let cols = headers.map((header) => <td className={header.header + "Class"}>{row[header.accessor]}</td>);
-  return (<tr className={getClassName(row)} onClick={onClickOfRow.bind(null,row)}>{cols}</tr>);
+  return (<tr className={getClassName(row)} onClick={onClickOfRow.bind(null, row)}>{cols}</tr>);
 };
 
 const createHeader = (headers, onClickOfHeader) => {
