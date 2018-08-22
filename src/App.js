@@ -25,6 +25,7 @@ class App extends Component {
     this.updateRegisterAndStack = this.updateRegisterAndStack.bind(this);
     this.executeNextLine = this.executeNextLine.bind(this);
     this.handleCodeEdit = this.handleCodeEdit.bind(this);
+    this.showStackForLine = this.showStackForLine.bind(this);
     this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
   }
 
@@ -43,7 +44,8 @@ class App extends Component {
           <div className="outputSection">
             <Prints prints={this.state.prints}/>
             <CustomTable rows={this.state.registerTable} headers={helpers.getColumns()} className="registerTable"
-                         onClickOfHeader={this.setHasChangedPropertyForChangedRows}/>
+                         onClickOfHeader={this.setHasChangedPropertyForChangedRows}
+                         onClickOfRow={this.showStackForLine}/>
           </div>
           <div>
             <Stack stack={this.state.stack}/>
@@ -131,9 +133,13 @@ class App extends Component {
     let {A, B, C, D, EQ, NE, GT, LT, CL, NL, SL, PRN, INST, STK} = state;
     let registerTable = this.state.registerTable;
     let prints = this.state.prints;
-    registerTable.push({A, B, C, D, EQ, NE, GT, LT, CL, NL, PRN, INST});
+    registerTable.push({A, B, C, D, EQ, NE, GT, LT, CL, NL, STK, PRN, INST});
     prints.push(PRN);
     this.setState({registerTable, prints, stack: STK});
+  }
+
+  showStackForLine(row) {
+    this.setState({stack: row.STK});
   }
 }
 
