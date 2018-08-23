@@ -1,8 +1,8 @@
 import React from "react"
-import {classNameOfRowsChanged} from "../constants";
+import {highlightingClass} from "../constants";
 
 function getClassName(row) {
-  return (row.hasChanged) ? classNameOfRowsChanged : null;
+  return (row.hasChanged) ? highlightingClass : null;
 }
 
 const createRow = (row, headers, onClickOfRow) => {

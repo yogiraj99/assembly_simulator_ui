@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MessageBox from "./components/MessageBox";
 import Machine from '@craftybones/assembly_simulator';
-import {INITIALCODE, INITIALMESSAGE} from "./constants";
+import {highlightingClass, INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
 import EditorComp from "./components/EditorComp";
 import Prints from "./components/Prints";
@@ -18,7 +18,9 @@ class App extends Component {
       message: INITIALMESSAGE,
       prints: [],
       stack: [],
-      isExecutingStepWise: false
+      isExecutingStepWise: false,
+      highlightLine: 0,
+      highlightingClass: highlightingClass
     };
     this.executeCode = this.executeCode.bind(this);
     this.executeStepWise = this.executeStepWise.bind(this);
@@ -33,7 +35,8 @@ class App extends Component {
     return (
         <div className="app">
           <div className="codeSection">
-            <EditorComp initailCode={INITIALCODE} onEdit={this.handleCodeEdit}/>
+            <EditorComp initialCode={INITIALCODE} highlightLine={this.state.highlightLine}
+                        highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
             <MessageBox message={this.state.message}/>
             <div>
               <button onClick={this.executeStepWise} disabled={this.state.isExecutingStepWise}>Step Into</button>
@@ -61,6 +64,7 @@ class App extends Component {
   }
 
   setHasChangedPropertyForChangedRows(event) {
+    this.setState({highlightLine: 0});
     let columnId = event.target.id;
     let registerTable = this.state.registerTable;
     let previousState = (registerTable[0]) ? registerTable[0][columnId] : undefined;
@@ -114,7 +118,7 @@ class App extends Component {
   }
 
   clearTableAndStack() {
-    this.setState({registerTable: [], prints: [], stack: []})
+    this.setState({registerTable: [], prints: [], stack: [], highlightLine: 0})
   }
 
   executeNextLine() {
@@ -133,7 +137,7 @@ class App extends Component {
     let {A, B, C, D, EQ, NE, GT, LT, CL, NL, SL, PRN, INST, STK} = state;
     let registerTable = this.state.registerTable;
     let prints = this.state.prints;
-    registerTable.push({A, B, C, D, EQ, NE, GT, LT, CL, NL, STK, PRN, INST});
+    registerTable.push({A, B, C, D, EQ, NE, GT, LT, CL, SL, NL, STK, PRN, INST});
     prints.push(PRN);
     this.setState({registerTable, prints, stack: STK});
   }
@@ -144,7 +148,7 @@ class App extends Component {
     for (let i = 0; i < registerTable.length; i++) {
       registerTable[i].hasChanged = (registerTable[i] === clickedRow);
     }
-    this.setState({registerTable});
+    this.setState({registerTable, highlightLine: clickedRow.SL});
   }
 }
 

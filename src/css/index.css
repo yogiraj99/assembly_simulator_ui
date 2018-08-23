@@ -77,7 +77,7 @@ table td {
     margin: 2% 0;
 }
 
-.rowChanged {
+.lineToHighlight {
     background: lightblue;
 }
 
