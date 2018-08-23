@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MessageBox from "./components/MessageBox";
 import Machine from '@craftybones/assembly_simulator';
-import {highlightingClass, INITIALCODE, INITIALMESSAGE} from "./constants";
+import {highlightErrorClass, highlightingClass, INITIALCODE, INITIALMESSAGE} from "./constants";
 import helpers from "./helpers";
 import EditorComp from "./components/EditorComp";
 import Prints from "./components/Prints";
@@ -26,6 +26,7 @@ class App extends Component {
     this.executeStepWise = this.executeStepWise.bind(this);
     this.updateRegisterAndStack = this.updateRegisterAndStack.bind(this);
     this.executeNextLine = this.executeNextLine.bind(this);
+    this.setError = this.setError.bind(this);
     this.handleCodeEdit = this.handleCodeEdit.bind(this);
     this.showStackForLine = this.showStackForLine.bind(this);
     this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
@@ -59,7 +60,7 @@ class App extends Component {
 
   handleCodeEdit(editor) {
     this.setState({editor});
-    this.clearTableAndStack();
+    this.clearState();
     this.setAsNotExecutingStepWise();
   }
 
@@ -96,10 +97,11 @@ class App extends Component {
         registerTable: machine.getTable(),
         prints: machine.getPrn(),
         stack: machine.getStack(),
-        message: INITIALMESSAGE
+        message: INITIALMESSAGE,
+        highlightingClass: highlightingClass
       });
     } catch (e) {
-      this.setState({message: e, registerTable: []})
+      this.setError(e);
     }
   }
 
@@ -110,15 +112,18 @@ class App extends Component {
     try {
       machine.load(numberedCode);
       machine.executeStepWise(this.updateRegisterAndStack);
-      this.clearTableAndStack();
+      this.clearState();
       this.setAsExecutingStepWise();
     } catch (e) {
-      this.setState({message: e, registerTable: []})
+      this.setError(e);
     }
   }
 
-  clearTableAndStack() {
-    this.setState({registerTable: [], prints: [], stack: [], highlightLine: 0})
+  clearState() {
+    this.setState({
+      registerTable: [], prints: [], stack: [],
+      highlightLine: 0, highlightingClass: highlightingClass
+    })
   }
 
   executeNextLine() {
@@ -149,6 +154,16 @@ class App extends Component {
       registerTable[i].hasChanged = (registerTable[i] === clickedRow);
     }
     this.setState({registerTable, highlightLine: clickedRow.SL});
+  }
+
+  setError(error) {
+    this.setState({
+      //TODO:Remove * 10 when fixed the lineNumber problem
+      message: `Error on lineNumber ${error.lineNumber * 10}`,
+      highlightLine: error.lineNumber,
+      highlightingClass: highlightErrorClass,
+      registerTable: []
+    })
   }
 }
 
