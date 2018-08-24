@@ -1,0 +1,142 @@
+@import "~codemirror/lib/codemirror.css";
+
+html,
+body,
+#root,
+.app {
+  margin: 0;
+  height: 100%;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  background: #efefef;
+}
+
+table,
+td,
+th,
+tr {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.assembly-simulator-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 40px 400px auto;
+  grid-gap: 10px;
+  height: 100%;
+}
+
+.output-container {
+  padding: 0 20px;
+}
+
+.registerTable {
+  text-align: center;
+  flex: 1;
+}
+
+.INSTClass {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.stack {
+  margin: 0 5px;
+  width: 100px;
+}
+
+.assembly-simulator-header {
+  padding: 10px;
+  .menu {
+    font-size: 12px;
+    position: absolute;
+    transform: rotate(-90deg);
+    cursor: pointer;
+    transition: all 1s ease;
+    width: 13px;
+    height: 5px;
+    line-height: 1px;
+    top: 15px;
+    &.active {
+      transform: rotate(180deg);
+    }
+  }
+  .title {
+    margin-left: 20px;
+  }
+}
+
+.card {
+  box-shadow: 2px 3px 2px 3px #888888;
+}
+
+.prints {
+  overflow: scroll;
+  max-height: 400px;
+}
+
+.examples {
+  position: fixed;
+  background: #dedede;
+  left: -250px;
+  top: 0;
+  bottom: 0;
+  width: 250px;
+  z-index: 21;
+  padding-top: 25px;
+  transition: all 1s ease;
+  &.active {
+    left: 0;
+  }
+}
+
+.CodeMirror {
+  background: transparent;
+  font-family: 'Source Code Pro', monospace;
+}
+
+.CodeMirror-gutter {
+  background: #efefef;
+}
+
+.actions {
+  margin: 5px;
+  display: flex;
+  > button {
+    flex: 1;
+    border: 0;
+    margin: 4px;
+    padding: 10px;
+    font-size: 15px;
+  }
+}
+
+.header-title-action {
+  position: relative;
+  z-index: 25;
+}
+
+.assembly-simulator-header,
+.trace-table {
+  grid-column-start: 1;
+  grid-column-end: -1;
+}
+
+.trace-table {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+}
+
+.messageBox {
+  padding: 10px 30px;
+}
+
+.lineToHighlight {
+  background: lightblue;
+}
+
+.errorLine {
+  background-color: lightcoral;
+}

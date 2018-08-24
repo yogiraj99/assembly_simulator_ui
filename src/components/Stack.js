@@ -16,16 +16,14 @@ class Stack extends Component {
   }
 
   render() {
-    return (<div>
-      <table className="stack">
-        <tbody>
-        <tr>
-          <th>Stack</th>
-        </tr>
-        {this.getStackLines()}
-        </tbody>
-      </table>
-    </div>)
+    return (<table className="stack">
+      <tbody>
+      <tr>
+        <th>Stack</th>
+      </tr>
+      {this.getStackLines()}
+      </tbody>
+    </table>)
   }
 }
 

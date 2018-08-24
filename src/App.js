@@ -7,6 +7,7 @@ import EditorComp from "./components/EditorComp";
 import Prints from "./components/Prints";
 import CustomTable from "./components/CustomTable";
 import Stack from "./components/Stack";
+import './css/app.scss'
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +21,8 @@ class App extends Component {
       stack: [],
       isExecutingStepWise: false,
       highlightLine: 0,
-      highlightingClass: highlightingClass
+      highlightingClass: highlightingClass,
+      isSidebarOpen: false
     };
     this.executeCode = this.executeCode.bind(this);
     this.executeStepWise = this.executeStepWise.bind(this);
@@ -30,29 +32,43 @@ class App extends Component {
     this.handleCodeEdit = this.handleCodeEdit.bind(this);
     this.showStackForLine = this.showStackForLine.bind(this);
     this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
+    this.openMenu = this.openMenu.bind(this);
+  }
+
+  openMenu() {
+    this.setState({isSidebarOpen: !this.state.isSidebarOpen})
   }
 
   render() {
+    const sidebarClassName = this.state.isSidebarOpen ? 'active' : '';
     return (
         <div className="app">
-          <div className="codeSection">
-            <EditorComp initialCode={INITIALCODE} highlightLine={this.state.highlightLine}
-                        highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
-            <MessageBox message={this.state.message}/>
-            <div>
-              <button onClick={this.executeStepWise} disabled={this.state.isExecutingStepWise}>Step Into</button>
-              <button onClick={this.executeCode}>Run</button>
-              <button onClick={this.executeNextLine} disabled={!this.state.isExecutingStepWise}>Next</button>
+          <div className="assembly-simulator-container">
+            <div className="assembly-simulator-header">
+              <div className="header-title-action">
+                <span className={`menu ${sidebarClassName}`} onClick={this.openMenu}>...</span>
+                <span className="title">Assembly Simulator</span>
+              </div>
             </div>
-          </div>
-          <div className="outputSection">
-            <Prints prints={this.state.prints}/>
-            <CustomTable rows={this.state.registerTable} headers={helpers.getColumns()} className="registerTable"
-                         onClickOfHeader={this.setHasChangedPropertyForChangedRows}
-                         onClickOfRow={this.showStackForLine}/>
-          </div>
-          <div>
-            <Stack stack={this.state.stack}/>
+            <div className="code-container card">
+              <EditorComp initialCode={INITIALCODE} highlightLine={this.state.highlightLine}
+                          highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
+              <div className="actions card">
+                <button onClick={this.executeStepWise} disabled={this.state.isExecutingStepWise}>Step Into</button>
+                <button onClick={this.executeCode}>Run</button>
+                <button onClick={this.executeNextLine} disabled={!this.state.isExecutingStepWise}>Next</button>
+              </div>
+              <MessageBox message={this.state.message}/>
+            </div>
+            <div className="output-container card">
+              <Prints prints={this.state.prints}/>
+            </div>
+            <div className="trace-table">
+              <CustomTable rows={this.state.registerTable} headers={helpers.getColumns()} className="registerTable"
+                           onClickOfHeader={this.setHasChangedPropertyForChangedRows}
+                           onClickOfRow={this.showStackForLine}/>
+              <Stack stack={this.state.stack}/>
+            </div>
           </div>
         </div>
     );
@@ -122,7 +138,8 @@ class App extends Component {
   clearState() {
     this.setState({
       registerTable: [], prints: [], stack: [],
-      highlightLine: 0, highlightingClass: highlightingClass
+      highlightLine: 0, highlightingClass: highlightingClass,
+      message: INITIALMESSAGE
     })
   }
 

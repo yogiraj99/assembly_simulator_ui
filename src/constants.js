@@ -1,5 +1,5 @@
 export const
-    INITIALMESSAGE = "No errors found",
+    INITIALMESSAGE = "Code seems fine",
     INITIALCODE = "START\nPRN \"HELLO\"\nSTOP",
     highlightingClass = 'lineToHighlight',
     highlightErrorClass = "errorLine"
