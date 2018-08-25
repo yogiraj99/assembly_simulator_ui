@@ -18,7 +18,7 @@ export default class EditorComp extends React.Component {
 
   render() {
     let initialCode = "START\nPRN \"HELLO\"\nSTOP";
-    return (<div>
+    return (
       <CodeMirror editorDidMount={editor => {
         this.editorInstance = editor
       }} value={this.props.initialCode || initialCode}
@@ -26,6 +26,6 @@ export default class EditorComp extends React.Component {
                   onChange={(editor, value) => {
                     this.props.onEdit(editor.doc.getValue())
                   }} className="editor"/>
-    </div>)
+    )
   }
 }

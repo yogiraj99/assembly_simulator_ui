@@ -1,0 +1,64 @@
+@import "./_variable";
+
+html,
+body,
+#root,
+.app {
+  margin: 0;
+  height: 100%;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  background: $body-background;
+  color: $body-text-color;
+  overflow: hidden;
+}
+
+table,
+td,
+th,
+tr {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.assembly-simulator-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 50px 400px auto;
+  height: 100%;
+}
+
+.messageBox {
+  border: $app-separator solid 1px;
+  .code-container & {
+    margin: 0 9px;
+    padding: 5px 15px;
+    background: $success-color;
+    color: white;
+  }
+  &.error {
+    background: $error-color;
+  }
+}
+
+.output-container {
+  padding: 0 20px;
+  border-bottom: $app-separator solid 1px;
+  overflow: auto;
+}
+
+.trace-table {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.result-table {
+  flex: 1;
+  background: lighten($body-background, 5%);
+  overflow: auto;
+  table {
+    width: 100%;
+    overflow: auto;
+  }
+}

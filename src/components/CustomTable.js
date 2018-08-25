@@ -25,7 +25,11 @@ export default (props) => {
   const tableRows = rows.map((row) => createRow(row, headers, onClickOfRow));
   const tableHeaders = createHeader(headers, onClickOfHeader);
 
-  return (<table className={className}>{tableHeaders}
-    <tbody>{tableRows}</tbody>
-  </table>)
+  return (
+      <div className="result-table">
+        <table className={className}>{tableHeaders}
+          <tbody>{tableRows}</tbody>
+        </table>
+      </div>
+  );
 }

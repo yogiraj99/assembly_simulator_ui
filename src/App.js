@@ -22,7 +22,8 @@ class App extends Component {
       isExecutingStepWise: false,
       highlightLine: 0,
       highlightingClass: highlightingClass,
-      isSidebarOpen: false
+      isSidebarOpen: false,
+      codeStatus: "success"
     };
     this.executeCode = this.executeCode.bind(this);
     this.executeStepWise = this.executeStepWise.bind(this);
@@ -50,17 +51,17 @@ class App extends Component {
                 <span className="title">Assembly Simulator</span>
               </div>
             </div>
-            <div className="code-container card">
+            <div className="code-container">
               <EditorComp initialCode={INITIALCODE} highlightLine={this.state.highlightLine}
                           highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
-              <div className="actions card">
+              <div className="actions">
                 <button onClick={this.executeStepWise} disabled={this.state.isExecutingStepWise}>Step Into</button>
                 <button onClick={this.executeCode}>Run</button>
                 <button onClick={this.executeNextLine} disabled={!this.state.isExecutingStepWise}>Next</button>
               </div>
-              <MessageBox message={this.state.message}/>
+              <MessageBox message={this.state.message} className={this.state.codeStatus}/>
             </div>
-            <div className="output-container card">
+            <div className="output-container">
               <Prints prints={this.state.prints}/>
             </div>
             <div className="trace-table">
@@ -114,7 +115,8 @@ class App extends Component {
         prints: machine.getPrn(),
         stack: machine.getStack(),
         message: INITIALMESSAGE,
-        highlightingClass: highlightingClass
+        highlightingClass: highlightingClass,
+        highlightLine: 0
       });
     } catch (e) {
       this.setError(e);
@@ -179,7 +181,8 @@ class App extends Component {
       message: `Error on lineNumber ${error.lineNumber * 10}`,
       highlightLine: error.lineNumber,
       highlightingClass: highlightErrorClass,
-      registerTable: []
+      registerTable: [],
+      codeStatus: "error"
     })
   }
 }

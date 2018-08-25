@@ -1,0 +1,30 @@
+@import "./variable";
+
+.assembly-simulator-header {
+  border-bottom: 1px solid $app-separator;
+  padding: 10px;
+  .menu {
+    font-size: 12px;
+    position: absolute;
+    transform: rotate(-90deg);
+    cursor: pointer;
+    transition: all 1s ease;
+    transform-origin: 11px 5px;
+    width: 13px;
+    height: 5px;
+    line-height: 1px;
+    top: 9px;
+    text-shadow: 0 0 1px #000;
+    &.active {
+      transform: rotate(90deg);
+    }
+  }
+  .title {
+    margin-left: 20px;
+  }
+}
+
+.header-title-action {
+  position: relative;
+  z-index: 25;
+}

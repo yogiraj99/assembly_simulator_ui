@@ -1,0 +1,27 @@
+@import "./variable";
+
+.code-container {
+  border-right: $app-separator solid 1px;
+  border-bottom: $app-separator solid 1px;
+}
+
+.CodeMirror {
+  background: transparent;
+  font-family: inherit;
+  color: $code-text-color;
+  border-bottom: $app-separator solid 1px;
+}
+
+.CodeMirror-gutter {
+  background: lighten($body-background, 5%);
+}
+
+.CodeMirror-linenumber {
+  color: $line-number-color;
+}
+
+.CodeMirror-gutters {
+  border-right: $app-separator solid 1px;
+}
+
+
