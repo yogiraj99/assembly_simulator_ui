@@ -9,6 +9,9 @@ import CustomTable from "./components/CustomTable";
 import Stack from "./components/Stack";
 import './css/app.scss'
 
+const successStatus = "success";
+const errorStatus = "error";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +26,7 @@ class App extends Component {
       highlightLine: 0,
       highlightingClass: highlightingClass,
       isSidebarOpen: false,
-      codeStatus: "success"
+      codeStatus: successStatus
     };
     this.executeCode = this.executeCode.bind(this);
     this.executeStepWise = this.executeStepWise.bind(this);
@@ -141,7 +144,7 @@ class App extends Component {
     this.setState({
       registerTable: [], prints: [], stack: [],
       highlightLine: 0, highlightingClass: highlightingClass,
-      message: INITIALMESSAGE
+      message: INITIALMESSAGE, codeStatus: successStatus
     })
   }
 
@@ -182,7 +185,7 @@ class App extends Component {
       highlightLine: error.lineNumber,
       highlightingClass: highlightErrorClass,
       registerTable: [],
-      codeStatus: "error"
+      codeStatus: errorStatus
     })
   }
 }
