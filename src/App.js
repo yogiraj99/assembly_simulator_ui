@@ -17,7 +17,7 @@ class App extends Component {
     super(props);
     this.state = {
       machine: new Machine(),
-      editor: INITIALCODE,
+      editor: this.getInitialCode(),
       registerTable: [],
       message: INITIALMESSAGE,
       prints: [],
@@ -37,6 +37,7 @@ class App extends Component {
     this.showStackForLine = this.showStackForLine.bind(this);
     this.setHasChangedPropertyForChangedRows = this.setHasChangedPropertyForChangedRows.bind(this);
     this.openMenu = this.openMenu.bind(this);
+    this.saveCurrentCode = this.saveCurrentCode.bind(this);
   }
 
   openMenu() {
@@ -55,7 +56,7 @@ class App extends Component {
               </div>
             </div>
             <div className="code-container">
-              <EditorComp initialCode={INITIALCODE} highlightLine={this.state.highlightLine}
+              <EditorComp initialCode={this.getInitialCode()} highlightLine={this.state.highlightLine}
                           highlightingClass={this.state.highlightingClass} onEdit={this.handleCodeEdit}/>
               <div className="actions">
                 <button onClick={this.executeStepWise} disabled={this.state.isExecutingStepWise}>Step Into</button>
@@ -76,6 +77,24 @@ class App extends Component {
           </div>
         </div>
     );
+  }
+
+  saveCurrentCode() {
+    let editor = this.state.editor;
+    editor = helpers.replaceInString(editor, "\n", "{{{{,}}}}");
+    editor = helpers.replaceInString(editor, ";", "{{{{:}}}}");
+    document.cookie = "assemblyCode=" + editor;
+  }
+
+  getInitialCode() {
+    window.onbeforeunload = this.saveCurrentCode;
+    window.onrelod = this.saveCurrentCode;
+    let cookies = document.cookie.split(';').filter(item => item.includes("assemblyCode"));
+    let savedCode = cookies[0];
+    savedCode = helpers.replaceInString(savedCode, "assemblyCode=", "");
+    savedCode = helpers.replaceInString(savedCode, "{{{{,}}}}", "\n");
+    savedCode = helpers.replaceInString(savedCode, "{{{{:}}}}", ";");
+    return savedCode || INITIALCODE;
   }
 
   handleCodeEdit(editor) {
@@ -181,7 +200,7 @@ class App extends Component {
   setError(error) {
     this.setState({
       //TODO:Remove * 10 when fixed the lineNumber problem
-      message: `Error on lineNumber ${error.lineNumber}`,
+      message: `${error} at ${error.lineNumber}`,
       highlightLine: error.lineNumber,
       highlightingClass: highlightErrorClass,
       registerTable: [],

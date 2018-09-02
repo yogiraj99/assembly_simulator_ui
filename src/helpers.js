@@ -17,4 +17,8 @@ const compareState = function (currentState, previousState, onChange, onNotChang
     onNotChange();
   }
 };
-export default {getColumns, compareState}
+
+const replaceInString = function (string, toBeReplaced, replaceWith) {
+  return string.replace(new RegExp(toBeReplaced, "g"), replaceWith);
+};
+export default {getColumns, compareState, replaceInString}
