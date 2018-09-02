@@ -181,7 +181,7 @@ class App extends Component {
   setError(error) {
     this.setState({
       //TODO:Remove * 10 when fixed the lineNumber problem
-      message: `Error on lineNumber ${error.lineNumber * 10}`,
+      message: `Error on lineNumber ${error.lineNumber}`,
       highlightLine: error.lineNumber,
       highlightingClass: highlightErrorClass,
       registerTable: [],

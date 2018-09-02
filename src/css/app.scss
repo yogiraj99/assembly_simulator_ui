@@ -15,7 +15,12 @@
   padding-left: 10px;
 }
 
+.stack-container {
+  overflow: auto;
+}
+
 .stack {
+  overflow: auto;
   margin: 0 5px;
   width: 100px;
 }
