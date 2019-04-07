@@ -91,6 +91,9 @@ class App extends Component {
     window.onrelod = this.saveCurrentCode;
     let cookies = document.cookie.split(';').filter(item => item.includes("assemblyCode"));
     let savedCode = cookies[0];
+    if (!savedCode) {
+      return INITIALCODE
+    }
     savedCode = helpers.replaceInString(savedCode, "assemblyCode=", "");
     savedCode = helpers.replaceInString(savedCode, "{{{{,}}}}", "\n");
     savedCode = helpers.replaceInString(savedCode, "{{{{:}}}}", ";");
