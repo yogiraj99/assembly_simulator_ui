@@ -13,11 +13,12 @@
     "build": "webpack"
   },
   "devDependencies": {
-    "babel-jest": "^23.0.1",
-    "babel-loader": "^7.1.4",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^24.8.0",
+    "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "css-loader": "^0.28.11",
+    "css-loader": "^3.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
